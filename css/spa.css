@@ -1,0 +1,59 @@
+/** Begin reset */
+*{
+	margin : 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6,p{margin-bottom: 10px;}
+ol,ul,dl{list-style-position: inside;}
+/** End reset*/
+
+/** Begin standard selectors  */
+body{
+	font: 12px/1.5 "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei","微软雅黑",'黑体',"Arial";
+	color: #444;
+	background-color: #888;
+}
+a{
+	color: #333;
+	text-decoration:none;
+	-webkit-transition: color 0.2s ease-in-out;
+	transition: color 0.2s ease-in-out;
+	-webkit-transition: background 0.2s ease-in-out;
+	transition: background 0.2s ease-in-out;
+	-webkit-transition: border 0.2s ease-in-out;
+	transition: border 0.2s ease-in-out;
+}
+a:hover{text-decoration:none;color: #ffcc00;}
+/** End standard selectors  */
+
+/* Begin spa namespace selectors */
+#spa{
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	bottom: 8px;
+	right: 8px;
+
+	min-height: 500px;
+	min-width: 500px;
+	overflow: hidden;
+
+	background-color: #fff;
+	-webkit-border-radius: 0 8px 0 8px;
+	-moz-border-radius: 0 8px 0 8px;
+	border-radius: 0 8px 0 8px;
+}
+/* End spa namespace selectors */
+
+/* Begin utility selectors */
+.spa-x-select{}
+.spa-x-clearfloat{
+	height: 0!important;
+	float: none!important;
+	visibility: hidden!important;
+	clear: both!important;
+}
+/* End utility selectors */
