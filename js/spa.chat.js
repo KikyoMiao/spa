@@ -4,8 +4,8 @@ spa.chat=(function(){
 			main_html : String()
 				+ '<div class="spa-chat">'
 					+ '<div class="spa-chat-head">'
-						+ '<div class="spa-chat-toggle">+</div>'
-						+ '<div class="spa-chat-title">'
+						+ '<div class="spa-chat-head-toggle">+</div>'
+						+ '<div class="spa-chat-head-title">'
 							+ 'Chat'
 						+ '</div>'
 					+ '</div>'
@@ -116,6 +116,7 @@ spa.chat=(function(){
 		}
 
 		stateMap.position_type = '';
+		console.log(position_type,toggle_text)
 		jqueryMap.$slider.animate(
 			{ height : height_px },
 			animate_time,
