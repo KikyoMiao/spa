@@ -92,7 +92,7 @@
     if ( checkMatchVal.call(this, data ) ) { return false; }
     this.push( data );
     return true;
-  };
+  }
   // primary utility
   makeListPlus = function ( input_list ) {
     if ( input_list && $.isArray(input_list) ) {
@@ -109,7 +109,7 @@
     input_list.push_uniq  = pushUniqVal;
 
     return input_list;
-  };
+  }
   // End utility /makeListPlus/
   //-------------------- END UTILITY METHODS -------------------
 

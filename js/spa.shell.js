@@ -1,13 +1,17 @@
 spa.shell = (function () {
+	'use strict';
+
 	var configMap = {
 		anchor_schema_map : {
 			chat : {opened : true, closed : true}
 		},
 		main_html : String()
 		+ '<div class="spa-shell-head">'
-			+ '<div class="spa-shell-head-logo"></div>'
+			+ '<div class="spa-shell-head-logo">'
+				+ '<h1>SPA</h1>'
+				+ '<p>javascript end to end</p>'
+			+ '</div>'
 			+ '<div class="spa-shell-head-acct"></div>'
-			+ '<div class="spa-shell-head-search"></div>'
 		+ '</div>'
 		+ '<div class="spa-shell-main">'
 			+ '<div class="spa-shell-main-nav"></div>'
@@ -32,6 +36,7 @@ spa.shell = (function () {
 
 	copyAnchorMap,  setJqueryMap,
 	toggleChat,     changeAnchorPart,
+	onTapAcct,      onLogin,     onLogout,
 	onHashchange,   onClickChat, onResize,
 	setChatAnchor,  initModule;
 
@@ -124,9 +129,32 @@ spa.shell = (function () {
 	setJqueryMap = function(){
 		var $container = stateMap.$container;
 		jqueryMap = {
-			$container : $container
+			$container : $container,
+			$acct      : $container.find('.spa-shell-head-acct'),
+			$nav       : $container.find('.spa-shell-main-nav')
 		};
-	};
+	}
+
+	onTapAcct = function( event ){
+		var acct_text, user_name, user = spa.model.people.get_user();
+		if ( user.get_is_anon() ) {
+			user_name = prompt( 'please sign-in' );
+			spa.model.people.login( user_name );
+			jqueryMap.$acct.text( '...processing' );
+		}else{
+			spa.model.people.logout();
+		}
+		return false;
+	}
+
+	onLogin = function( event, login_user ){
+		jqueryMap.$acct.text( login_user.name );
+	}
+
+	onLogout = function( event, logout_user ){
+		jqueryMap.$acct.text( 'Please sign-in' );
+	}
+
 	toggleChat = function(do_extend,callback){
 		var
 		  px_chat_ht = jqueryMap.$chat.height(),
@@ -200,6 +228,13 @@ spa.shell = (function () {
 			people_model     : spa.model.people
 		});
 		spa.chat.initModule( jqueryMap.$container );
+
+		$.gevent.subscribe( $container, 'spa-login', onLogin );
+		$.gevent.subscribe( $container, 'spa-logout', onLogout );
+
+		jqueryMap.$acct
+			.text( 'Please sign-in' )
+			.bind( 'utap', onTapAcct );
 
 		$(window)
 			.bind('resize',onResize)
