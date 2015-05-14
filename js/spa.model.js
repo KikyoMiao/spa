@@ -251,7 +251,7 @@ spa.model = (function(){
 			if ( new_chatee ) {
 				if ( chatee && chatee.id === new_chatee.id ) {
 					return false;
-				};
+				}
 			}else{
 				new_chatee = null;
 			}

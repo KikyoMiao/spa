@@ -4,6 +4,5 @@ var spa=(function(){
 		spa.model.initModule();
 		spa.shell.init($container)
 	};
-
 	return { init : initModule };
 }());

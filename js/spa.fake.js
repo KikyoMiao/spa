@@ -44,7 +44,8 @@ spa.fake = (function(){
 	]
 
 	mockSio = (function(){
-		var on_sio, emit_sio, send_listchange, listchage_idto, callback_map = {};
+		var on_sio, emit_sio, emit_mock_msg,
+			send_listchange, listchage_idto, callback_map = {};
 
 		on_sio = function( msg_type, callback ){
 			callback_map[ msg_type ] = callback;
@@ -63,12 +64,49 @@ spa.fake = (function(){
 					callback_map.userupdate([ person_map ]);
 				},3000)
 			};
+
+			if ( msg_type === 'updatechat' && callback_map.updatechat ) {
+				setTimeout( function(){
+					var user = spa.model.people.get_user();
+					callback_map.updatechat([{
+						dest_id  :  user.id,
+						dest_time : user.name,
+						sender_id : data.dest_id,
+						msg_text  : 'Thank for the note,' + user.name
+					}])
+				}, 2000)
+			}
+
+			if ( msg_type === 'leavechat' ){
+				delete callback_map.listchage;
+				delete callback_map.updatechat;
+
+				if ( listchage_idto ) {
+					clearTimeout( listchage_idto );
+					listchage_idto = undefined;
+				}
+				send_listchange();
+			};
+
+			emit_mock_msg = function(){
+				setTimeout( function(){
+					if ( callback_map.updatechat ) {
+						callback_map.updatechat([{
+							dest_id   :  user.id,
+							dest_time :  user.name,
+							sender_id :  'id_04',
+							msg_text  :  'Hi there ' + user.name + '!Wilma here.'
+						}])
+					};
+				} )
+			}
 		}
 
 		send_listchange = function(){
 			listchage_idto = setTimeout( function(){
 				if ( callback_map.listchage ) {
 					callback_map.listchage([ peopleList ]);
+					emit_mock_msg();
 					listchage_idto = undefined;
 				}else{
 					send_listchange();
